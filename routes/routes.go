@@ -41,6 +41,14 @@ func Route() {
 	route := gin.Default()
 	route.Use(CORSMiddleware())
 
+	// Default Route
+	route.GET("/", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"data": "HR Management System API is running ....",
+		})
+	})
+
+	// Ping
 	route.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"data": "pong",

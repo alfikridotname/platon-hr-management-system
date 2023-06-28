@@ -24,10 +24,10 @@ func (h *userHandler) Login(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
-		// errors := utils.FormatValidationError(err)
-		// errorMessage := gin.H{"errors": errors}
-		// response := utils.APIResponse("Login failed", http.StatusUnprocessableEntity, false, errorMessage)
-		c.JSON(http.StatusUnprocessableEntity, "tes")
+		errors := utils.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors}
+		response := utils.APIResponse("Login failed", http.StatusUnprocessableEntity, false, errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
 
