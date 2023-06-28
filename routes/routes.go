@@ -5,6 +5,7 @@ import (
 	"hr-management-system/app/repository"
 	"hr-management-system/app/service"
 	"hr-management-system/config"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -40,6 +41,7 @@ func Route() {
 	userHandler := handler.NewUserHandler(userService, authService)
 
 	// Route Init
+	gin.SetMode(os.Getenv("GIN_MODE"))
 	route := gin.Default()
 	route.Use(CORSMiddleware())
 
