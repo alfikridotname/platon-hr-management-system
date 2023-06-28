@@ -1,15 +1,47 @@
 package service
 
-type LoginInput struct {
-	Email    string `json:"email" binding:"required"`
-	Password string `json:"password" binding:"required"`
+import (
+	"errors"
+	"hr-management-system/app/entity"
+	"hr-management-system/app/repository"
+	"hr-management-system/app/request"
+
+	"golang.org/x/crypto/bcrypt"
+)
+
+// Interface
+type UserService interface {
+	Login(input request.LoginInput) (entity.User, error)
 }
 
-type service interface {
-	Login(input LoginInput) (User, error)
-	GetUserByID(ID int) (User, error)
+// Struct
+type userService struct {
+	repository repository.UserRepository
 }
 
-type service struct {
-	repository Repository
+// Constructor
+func NewUserService(repository repository.UserRepository) *userService {
+	return &userService{repository}
+}
+
+// Method
+func (s *userService) Login(input request.LoginInput) (entity.User, error) {
+	email := input.Email
+	password := input.Password
+
+	user, err := s.repository.FindByEmail(email)
+	if err != nil {
+		return user, err
+	}
+
+	if user.ID == 0 {
+		return user, errors.New("USER NOT FOUND")
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	if err != nil {
+		return user, err
+	}
+
+	return user, nil
 }
