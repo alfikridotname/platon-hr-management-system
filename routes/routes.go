@@ -33,11 +33,13 @@ func CORSMiddleware() gin.HandlerFunc {
 
 // Route
 func Route() {
+	// Repo, service & handler
 	userRepository := repository.NewRepository(db)
 	userService := service.NewUserService(userRepository)
 	authService := service.NewAuthService()
 	userHandler := handler.NewUserHandler(userService, authService)
 
+	// Route Init
 	route := gin.Default()
 	route.Use(CORSMiddleware())
 
@@ -55,8 +57,10 @@ func Route() {
 		})
 	})
 
+	// API V1
 	v1 := route.Group("/api/v1")
 	v1.POST("/login", userHandler.Login)
 
+	// Run Server
 	route.Run(":8080")
 }

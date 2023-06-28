@@ -24,7 +24,7 @@ func NewRepository(db *gorm.DB) *userRepository {
 // Method
 func (r *userRepository) FindByEmail(email string) (entity.User, error) {
 	var user entity.User
-	err := r.db.Where("users.email = ?", email).Find(&user).Error
+	err := r.db.Where("users.email = ?", email).Where("users.active = ?", true).Find(&user).Error
 	if err != nil {
 		return user, err
 	}
