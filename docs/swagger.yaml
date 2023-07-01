@@ -1,0 +1,35 @@
+definitions:
+  request.LoginInput:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+info:
+  contact: {}
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Login User
+      parameters:
+      - description: Login
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.LoginInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Login User
+      tags:
+      - User
+swagger: "2.0"

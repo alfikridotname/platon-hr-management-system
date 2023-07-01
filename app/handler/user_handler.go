@@ -19,6 +19,14 @@ func NewUserHandler(userService service.UserService, authService service.AuthSer
 	return &userHandler{userService, authService}
 }
 
+// @Tags Users
+// @Summary Login User
+// @Description Login User
+// @Accept  json
+// @Produce  json
+// @Param input body request.LoginInput true "Login"
+// @Success 200
+// @Router /login [post]
 func (h *userHandler) Login(c *gin.Context) {
 	var input request.LoginInput
 

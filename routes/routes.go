@@ -7,7 +7,11 @@ import (
 	"hr-management-system/config"
 	"os"
 
+	docs "hr-management-system/docs"
+
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"gorm.io/gorm"
 )
 
@@ -45,6 +49,8 @@ func Route() {
 	route := gin.Default()
 	route.Use(CORSMiddleware())
 
+	docs.SwaggerInfo.BasePath = "/api/v1"
+
 	// Default Route
 	route.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
@@ -58,6 +64,9 @@ func Route() {
 			"data": "pong",
 		})
 	})
+
+	// Swagger
+	route.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	// API V1
 	v1 := route.Group("/api/v1")
