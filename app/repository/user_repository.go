@@ -1,14 +1,14 @@
 package repository
 
 import (
-	"hr-management-system/app/entity"
+	"hr-management-system/model"
 
 	"gorm.io/gorm"
 )
 
 // Interface
 type UserRepository interface {
-	FindByEmail(email string) (entity.User, error)
+	FindByEmail(email string) (model.User, error)
 }
 
 // Struct
@@ -22,11 +22,12 @@ func NewRepository(db *gorm.DB) *userRepository {
 }
 
 // Method
-func (r *userRepository) FindByEmail(email string) (entity.User, error) {
-	var user entity.User
-	err := r.db.Where("users.email = ?", email).Where("users.active = ?", true).Find(&user).Error
-	if err != nil {
-		return user, err
+func (r *userRepository) FindByEmail(email string) (model.User, error) {
+	var user model.User
+	result := r.db.Joins("Company").Joins("UserStatus").Where("users.email = ?", email).Find(&user)
+
+	if result.Error != nil {
+		return user, result.Error
 	}
 
 	return user, nil

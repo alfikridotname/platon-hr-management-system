@@ -2,16 +2,16 @@ package service
 
 import (
 	"errors"
-	"hr-management-system/app/entity"
 	"hr-management-system/app/repository"
 	"hr-management-system/app/request"
+	"hr-management-system/model"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
 // Interface
 type UserService interface {
-	Login(input request.LoginInput) (entity.User, error)
+	Login(input request.LoginInput) (model.User, error)
 }
 
 // Struct
@@ -25,7 +25,7 @@ func NewUserService(repository repository.UserRepository) *userService {
 }
 
 // Method
-func (s *userService) Login(input request.LoginInput) (entity.User, error) {
+func (s *userService) Login(input request.LoginInput) (model.User, error) {
 	email := input.Email
 	password := input.Password
 

@@ -31,5 +31,5 @@ paths:
           description: OK
       summary: Login User
       tags:
-      - User
+      - Users
 swagger: "2.0"

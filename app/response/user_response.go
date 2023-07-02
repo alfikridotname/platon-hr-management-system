@@ -1,21 +1,17 @@
 package response
 
-import "hr-management-system/app/entity"
+import "hr-management-system/model"
 
 type UserReponse struct {
-	ID     int    `json:"id"`
-	Email  string `json:"email"`
-	Active bool   `json:"active"`
-	Role   string `json:"role"`
-	Token  string `json:"token"`
+	ID        int    `json:"id"`
+	Email     string `json:"email"`
+	CompanyID int    `json:"company_id"`
 }
 
-func ResponseUser(user entity.User, token string) UserReponse {
+func ResponseUser(user model.User) UserReponse {
 	return UserReponse{
-		ID:     user.ID,
-		Email:  user.Email,
-		Active: user.Active,
-		Role:   user.Role,
-		Token:  token,
+		ID:        user.ID,
+		Email:     user.Email,
+		CompanyID: user.CompanyID,
 	}
 }
