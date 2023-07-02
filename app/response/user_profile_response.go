@@ -15,8 +15,6 @@ type UserProfileResponse struct {
 
 func ResponseUserProfile(userProfile model.UserProfile, user model.User) UserProfileResponse {
 	return UserProfileResponse{
-		// refer to user model
-		// StatusUserCode: userProfile.,
 		StatusUserCode:   user.StatusID,
 		StatusUserName:   user.UserStatus.Name,
 		Fullname:         userProfile.FullName,
