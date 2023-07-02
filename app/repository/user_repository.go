@@ -24,7 +24,14 @@ func NewRepository(db *gorm.DB) *userRepository {
 // Method
 func (r *userRepository) FindByEmail(email string) (model.User, error) {
 	var user model.User
-	result := r.db.Joins("Company").Joins("UserStatus").Where("users.email = ?", email).Find(&user)
+	result := r.db.Preload("Company").
+		Preload("Company.CompanyStatus").
+		Preload("UserStatus").
+		Preload("UserProfile").
+		Preload("UserProfile.UserType").
+		Preload("UserProfile.UserPosition").
+		Where("users.email = ?", email).
+		Find(&user)
 
 	if result.Error != nil {
 		return user, result.Error
